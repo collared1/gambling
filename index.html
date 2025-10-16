@@ -3,85 +3,72 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Blackjack with Persistent Balance</title>
+<title>Blackjack</title>
 <style>
-  :root{--bg:#0b1220;--card:#fff;--table:#0b2832;--accent:#1fb6ff;--text:#eaf6ff}
-  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--text);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-  .container{width:940px;max-width:95%;background:linear-gradient(180deg,#07111a,#041017);border-radius:12px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.6)}
-  h1{margin:0 0 10px 0;font-size:20px}
-  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px}
-  .money{font-weight:700;color:#9ef}
-  .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  input[type=number]{width:90px;padding:6px;border-radius:6px;border:1px solid #345;background:#0b1822;color:#cfe;text-align:center}
-  button{background:var(--accent);border:none;color:#042;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
-  button:disabled{opacity:.4;cursor:not-allowed}
-  .table{background:var(--table);border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
-  .panel{flex:1;background:linear-gradient(180deg,#071b24,#041217);border-radius:8px;padding:12px;min-height:160px;border:1px solid rgba(255,255,255,0.03)}
-  .panel h2{margin:0 0 8px 0;font-size:14px}
-  .cards{display:flex;gap:8px;flex-wrap:wrap}
-  .card{width:68px;height:96px;border-radius:8px;background:var(--card);color:#111;display:flex;flex-direction:column;justify-content:space-between;padding:6px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-  .card .top-left{font-size:12px}
-  .card .bottom-right{font-size:12px;align-self:flex-end;transform:rotate(180deg)}
-  .card.red{color:#c21}
-  .info{min-width:260px}
-  .status{margin-top:8px;font-size:14px}
-  .small{font-size:13px;color:#9fc}
-  .hidden-card{background:linear-gradient(90deg,#22364a,#16242f);color:transparent}
-  footer{margin-top:12px;font-size:13px;color:#9fb}
-  .score{margin-top:6px;font-weight:800}
-  .center{display:flex;flex-direction:column;align-items:center;justify-content:center}
+:root{--bg:#0b1220;--card:#fff;--table:#0b2832;--accent:#1fb6ff;--text:#eaf6ff}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--text);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.container{width:940px;max-width:95%;background:linear-gradient(180deg,#07111a,#041017);border-radius:12px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.6)}
+h1{margin:0 0 10px 0;font-size:20px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px}
+.money{font-weight:700;color:#9ef}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=number]{width:90px;padding:6px;border-radius:6px;border:1px solid #345;background:#0b1822;color:#cfe;text-align:center}
+button{background:var(--accent);border:none;color:#042;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+button:disabled{opacity:.4;cursor:not-allowed}
+.table{background:var(--table);border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.panel{flex:1;background:linear-gradient(180deg,#071b24,#041217);border-radius:8px;padding:12px;min-height:160px;border:1px solid rgba(255,255,255,0.03)}
+.panel h2{margin:0 0 8px 0;font-size:14px}
+.cards{display:flex;gap:8px;flex-wrap:wrap}
+.card{width:68px;height:96px;border-radius:8px;background:var(--card);color:#111;display:flex;flex-direction:column;justify-content:space-between;padding:6px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.card .top-left{font-size:12px}
+.card .bottom-right{font-size:12px;align-self:flex-end;transform:rotate(180deg)}
+.card.red{color:#c21}
+.info{min-width:260px}
+.status{margin-top:8px;font-size:14px}
+.small{font-size:13px;color:#9fc}
+.hidden-card{background:linear-gradient(90deg,#22364a,#16242f);color:transparent}
+.score{margin-top:6px;font-weight:800}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="top">
-      <h1>Blackjack</h1>
-      <div class="money">Balance: <span id="money">Ⓜ100</span></div>
-      <div class="controls">
-        <input id="bet" type="number" min="1" placeholder="Bet" />
-        <button id="newBtn">Deal</button>
-        <button id="hitBtn">Hit</button>
-        <button id="standBtn">Stand</button>
-      </div>
+<div class="container">
+  <div class="top">
+    <h1>Blackjack</h1>
+    <div class="money">Balance: <span id="money">Ⓜ100</span></div>
+    <div class="controls">
+      <input id="bet" type="number" min="1" placeholder="Bet" />
+      <button id="newBtn">Deal</button>
+      <button id="hitBtn">Hit</button>
+      <button id="standBtn">Stand</button>
     </div>
-
-    <div class="table">
-      <div class="panel">
-        <h2>Dealer</h2>
-        <div class="cards" id="dealerCards"></div>
-        <div class="score small" id="dealerScore">Score: —</div>
-      </div>
-
-      <div class="panel">
-        <h2>You</h2>
-        <div class="cards" id="playerCards"></div>
-        <div class="score" id="playerScore">Score: 0</div>
-      </div>
-
-      <div class="panel info center">
-        <div class="small">Try to beat the dealer without going over 21. Blackjack (21 on deal) pays 3× your bet.</div>
-        <div class="status" id="status">Place a bet and press Deal to start.</div>
-      </div>
-    </div>
-
-    <footer>
-      Reloading the page resets your balance.
-    </footer>
   </div>
+
+  <div class="table">
+    <div class="panel">
+      <h2>Dealer</h2>
+      <div class="cards" id="dealerCards"></div>
+      <div class="score small" id="dealerScore">Score: —</div>
+    </div>
+
+    <div class="panel">
+      <h2>You</h2>
+      <div class="cards" id="playerCards"></div>
+      <div class="score" id="playerScore">Score: 0</div>
+    </div>
+
+    <div class="panel info center">
+      <div class="small">Try to beat the dealer without going over 21. Blackjack (21 on deal) pays 3× your bet.</div>
+      <div class="status" id="status">Place a bet and press Deal to start.</div>
+    </div>
+  </div>
+</div>
 
 <script>
 const suits=['♠','♥','♦','♣'];
-const ranks=[
-  {r:'A',v:11},{r:'2',v:2},{r:'3',v:3},{r:'4',v:4},{r:'5',v:5},
-  {r:'6',v:6},{r:'7',v:7},{r:'8',v:8},{r:'9',v:9},{r:'10',v:10},
-  {r:'J',v:10},{r:'Q',v:10},{r:'K',v:10}
-];
+const ranks=[{r:'A',v:11},{r:'2',v:2},{r:'3',v:3},{r:'4',v:4},{r:'5',v:5},{r:'6',v:6},{r:'7',v:7},{r:'8',v:8},{r:'9',v:9},{r:'10',v:10},{r:'J',v:10},{r:'Q',v:10},{r:'K',v:10}];
 
-function createDeck(){
-  const d=[];
-  for(const s of suits){ for(const r of ranks){ d.push({suit:s,rank:r.r,value:r.v}); } }
-  return d;
-}
+function createDeck(){ const d=[]; for(const s of suits){ for(const r of ranks){ d.push({suit:s,rank:r.r,value:r.v}); } } return d; }
 function shuffle(d){ for(let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; } }
 function draw(d){ return d.pop(); }
 function calcTotal(h){ let t=0,a=0; for(const c of h){t+=c.value;if(c.rank==='A')a++;} while(t>21&&a>0){t-=10;a--;} return t; }
@@ -97,27 +84,15 @@ const newBtn=document.getElementById('newBtn');
 const betInput=document.getElementById('bet');
 const moneyEl=document.getElementById('money');
 
-// Load or initialize balance
-let money = localStorage.getItem('blackjack_money');
-if(money === null){ money = 100; localStorage.setItem('blackjack_money', money); }
-else { money = parseInt(money); }
+// Use localStorage for persistent balance
+let money = Number(localStorage.getItem('blackjack_money'));
+if(!money){ money=100; localStorage.setItem('blackjack_money', money); }
 
 let deck,player,dealer,dealerHidden,bet=0,gameOver=false;
 
-function updateMoney(){
-  moneyEl.textContent=`Ⓜ${money}`;
-  localStorage.setItem('blackjack_money', money);
-}
+function updateMoney(){ moneyEl.textContent=`Ⓜ${money}`; localStorage.setItem('blackjack_money', money.toString()); }
 
-function cardEl(card,hidden=false){
-  const e=document.createElement('div');
-  e.className='card'+(['♥','♦'].includes(card.suit)?' red':'');
-  if(hidden){e.classList.add('hidden-card');return e;}
-  e.innerHTML=`<div class="top-left">${card.rank}${card.suit}</div>
-               <div style="font-size:26px;text-align:center">${card.suit}</div>
-               <div class="bottom-right">${card.rank}${card.suit}</div>`;
-  return e;
-}
+function cardEl(card,hidden=false){ const e=document.createElement('div'); e.className='card'+(['♥','♦'].includes(card.suit)?' red':''); if(hidden){e.classList.add('hidden-card');return e;} e.innerHTML=`<div class="top-left">${card.rank}${card.suit}</div><div style="font-size:26px;text-align:center">${card.suit}</div><div class="bottom-right">${card.rank}${card.suit}</div>`; return e; }
 
 function render(reveal=false){
   dealerCardsEl.innerHTML=''; playerCardsEl.innerHTML='';
@@ -128,11 +103,7 @@ function render(reveal=false){
 }
 
 function startGame(){
-  if(gameOver === false && player && player.length > 0){
-    // prevent restarting mid-game
-    statusEl.textContent = "Finish your current hand first.";
-    return;
-  }
+  if(gameOver===false && player && player.length>0){ statusEl.textContent="Finish your current hand first."; return; }
 
   bet=parseInt(betInput.value)||0;
   if(bet<=0){statusEl.textContent="Enter a valid bet amount.";return;}
@@ -154,15 +125,9 @@ function startGame(){
 
   if(playerBJ||dealerBJ){
     dealerHidden=false; render(true);
-    if(playerBJ&&dealerBJ){
-      statusEl.textContent="Both have Blackjack — Push.";
-      money+=bet;
-    }else if(playerBJ){
-      statusEl.textContent="Blackjack! You win 3×!";
-      money+=bet*3;
-    }else{
-      statusEl.textContent="Dealer has Blackjack. You lose.";
-    }
+    if(playerBJ&&dealerBJ){ statusEl.textContent="Both have Blackjack — Push."; money+=bet; }
+    else if(playerBJ){ statusEl.textContent="Blackjack! You win 3×!"; money+=bet*3; }
+    else { statusEl.textContent="Dealer has Blackjack. You lose."; }
     updateMoney(); hitBtn.disabled=true; standBtn.disabled=true; gameOver=true;
   }
 }
@@ -171,11 +136,7 @@ function playerHit(){
   if(gameOver)return;
   player.push(draw(deck)); render(false);
   const t=calcTotal(player);
-  if(t>21){
-    dealerHidden=false; render(true);
-    statusEl.textContent=`You busted with ${t}. Dealer wins.`;
-    hitBtn.disabled=true; standBtn.disabled=true; gameOver=true;
-  }
+  if(t>21){ dealerHidden=false; render(true); statusEl.textContent=`You busted with ${t}. Dealer wins.`; hitBtn.disabled=true; standBtn.disabled=true; gameOver=true; }
 }
 
 function playerStand(){
